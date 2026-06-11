@@ -4,7 +4,7 @@
 const config = {
   type: Phaser.AUTO, // SE ARA EN AUTOMATICO
   // tamaño
-  width: 200,
+  width: 400,
   height: 300,
   backgroundColor: "#33b7d8",
   parent: "game", // contenedor donde vamos a renderizar
@@ -13,7 +13,7 @@ const config = {
     //
     preload, // esto carga los recursos
     create, // esto las proyecta o las trabaja
-    update,
+    update, // actualiza
   },
 };
 
@@ -27,10 +27,13 @@ new Phaser.Game(config);
 // frameWhith sirve para decirle cuanto mida cada elemento de una imagen que contiene varios elementos, como la imagen tiene un pero de 108 y contiene 6 elementos, se se divide
 function preload() {
   this.load.image("cloud1", "assets/scenery/overworld/cloud1.png");
-  this.load.spritesheet("mario1", "assets/entities/mario.png", {
-    frameWidth: 16,
-  });
   this.load.image("floorbricks", "assets/scenery/overworld/floorbricks.png");
+  this.load.spritesheet("mario1", "assets/entities/mario.png", {
+    frameWidth: 18,
+    frameHeight: 16,
+  });
+  // aqui esta creando una animacion, se almacenara las posiciones 0 a 3 segun la imagen de "sprintsheet"
+  //this.anims sub sistema de phaser
 }
 
 // aqui estoy dando la indicacion de se muestre la nube con un tamaño asignado
@@ -46,20 +49,29 @@ function create() {
 
   this.mario1 = this.add.sprite(50, 200, "mario1").setOrigin(0, 0);
   this.keys = this.input.keyboard.createCursorKeys();
+  this.anims.create({
+    key: "mario-walk",
+    // funcion exclusio de phearse que calcula movimiento de pixeles para dar ilusion de estar caminando
+    frames: this.anims.generateFrameNumbers("mario1", { start: 1, end: 3 }),
+    frameRate: 12,
+    repear: -1,
+  });
 }
 
 // la funcion updat al momento de imprimirla en la cossola siempre se esta ejecuntado y contando de manera infinita, esto pasa en todos los videojuegos, ya que por detras siempre se tiene que estar actualizando ya que en los juegos siempre esta pasandop algo, como que se mueva el persona o que el fondo este pasando algo o el tiempo este
 
 function update() {
-  const velocidad = 2;
+  const velocidad = 1.5;
   // metodo
   // esta linea basicamente significa si usuario esta presinando (isDown en programacion de videojugos) keys izquiero se movera dos "posiiones a la izquierda"
 
   if (this.keys.left.isDown && this.mario1.x > 0) {
     this.mario1.x -= velocidad;
+    this.mario1.anims.play("mario-walk", true);
     // esta linea es como decir si no esta presionando la derecha pues presiona la izquiera y se movera a la dereha,
     // && AMBAS CONDICIONES SE DEBEN DE CUMPLIS
   } else if (this.keys.right.isDown && this.mario1.x < config.width - 16) {
     this.mario1.x += velocidad;
+    this.mario1.anims.play("mario-walk", true);
   }
 }
