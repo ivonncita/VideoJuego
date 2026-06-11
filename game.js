@@ -22,7 +22,6 @@ new Phaser.Game(config);
 // funciones
 // se ejecutaran el este orden, primero 1 sola vez las primeras dos funciones y la ultima constatemente
 
-// aqui carge la imagen y le di el nombre de cloud1
 //load se encarga de preparr la imagen y lo siguien es con lo que le indica que vas a cargar
 //SPRITESSHEET A DIFERENCIA DE LA IMAGEN, INDICA QUE NO ES UNA IMAGEN COMPLETA, SI QUE SE TIENE QE SUBIR EL ARCHIVO Y DIVIDIRLO EN POCIONES MAS PEQUEÑAS
 // frameWhith sirve para decirle cuanto mida cada elemento de una imagen que contiene varios elementos, como la imagen tiene un pero de 108 y contiene 6 elementos, se se divide
@@ -43,7 +42,7 @@ function preload() {
 function create() {
   this.add.image(100, 50, "cloud1").setOrigin(0, 0).setScale(0.3);
 
-  this.add.tileSprite(0, config.height - 16, config.width, 32, "floorbricks");
+  this.add.tileSprite(0, config.height - 70, config.width, 32, "floorbricks");
 
   this.mario1 = this.add.sprite(50, 200, "mario1").setOrigin(0, 0);
   this.keys = this.input.keyboard.createCursorKeys();
@@ -59,6 +58,7 @@ function update() {
   if (this.keys.left.isDown && this.mario1.x > 0) {
     this.mario1.x -= velocidad;
     // esta linea es como decir si no esta presionando la derecha pues presiona la izquiera y se movera a la dereha,
+    // && AMBAS CONDICIONES SE DEBEN DE CUMPLIS
   } else if (this.keys.right.isDown && this.mario1.x < config.width - 16) {
     this.mario1.x += velocidad;
   }
