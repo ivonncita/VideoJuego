@@ -45,14 +45,21 @@ function create() {
 
   this.add.tileSprite(0, config.height - 16, config.width, 32, "floorbricks");
 
-  this.add.image(50, 200, "mario1").setOrigin(0, 0);
-  // metodo
-
+  this.mario1 = this.add.sprite(50, 200, "mario1").setOrigin(0, 0);
   this.keys = this.input.keyboard.createCursorKeys();
 }
 
 // la funcion updat al momento de imprimirla en la cossola siempre se esta ejecuntado y contando de manera infinita, esto pasa en todos los videojuegos, ya que por detras siempre se tiene que estar actualizando ya que en los juegos siempre esta pasandop algo, como que se mueva el persona o que el fondo este pasando algo o el tiempo este
 
 function update() {
-  console.log("update");
+  const velocidad = 2;
+  // metodo
+  // esta linea basicamente significa si usuario esta presinando (isDown en programacion de videojugos) keys izquiero se movera dos "posiiones a la izquierda"
+
+  if (this.keys.left.isDown && this.mario1.x > 0) {
+    this.mario1.x -= velocidad;
+    // esta linea es como decir si no esta presionando la derecha pues presiona la izquiera y se movera a la dereha,
+  } else if (this.keys.right.isDown && this.mario1.x < config.width - 16) {
+    this.mario1.x += velocidad;
+  }
 }
