@@ -8,7 +8,14 @@ const config = {
   height: 300,
   backgroundColor: "#33b7d8",
   parent: "game", // contenedor donde vamos a renderizar
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: { y: 300 }, // aqui, dependiendo del juego puede aumentar para que de la impresion de que es mas pesado
 
+      debug: false,
+    },
+  },
   scene: {
     //
     preload, // esto carga los recursos
@@ -47,8 +54,13 @@ function create() {
 
   this.add.tileSprite(0, config.height - 70, config.width, 32, "floorbricks");
 
-  this.mario1 = this.add.sprite(50, 200, "mario1").setOrigin(0, 0);
+  //this.mario1 = this.add.sprite(50, 200, "mario1").setOrigin(0, 0);
+
+  this.mario1 = this.physics.add.sprite(50, 210, "mario1").set.setOrigin(0, 1);
+  //setGravityY(200);   // con la variable confi, ya cuenta con uuna gavedad por defaun, si en caso de que cada personaje quieras que tenga una gravedad diferente se usa esta lina set gravity
+  // entrada por teclado
   this.keys = this.input.keyboard.createCursorKeys();
+
   this.anims.create({
     key: "mario-walk",
     // funcion exclusio de phearse que calcula movimiento de pixeles para dar ilusion de estar caminando
