@@ -72,11 +72,16 @@ function update() {
   if (this.keys.left.isDown && this.mario1.x > 0) {
     this.mario1.x -= velocidad;
     this.mario1.anims.play("mario-walk", true);
+    // gira a la izquierda
+    this.mario1.flipX = true;
     // esta linea es como decir si no esta presionando la derecha pues presiona la izquiera y se movera a la dereha,
     // && AMBAS CONDICIONES SE DEBEN DE CUMPLIS
   } else if (this.keys.right.isDown && this.mario1.x < config.width - 16) {
     this.mario1.x += velocidad;
     this.mario1.anims.play("mario-walk", true);
+    /// gia a la derecha
+    this.mario1.flipX = false;
+    //basicamente se lee como si no se esta presionando ningun boton quedate en el frame de la key mario-idle
   } else {
     this.mario1.anims.play("mario-idle", true);
   }
