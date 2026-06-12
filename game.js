@@ -53,13 +53,19 @@ function create() {
   this.add.image(100, 50, "cloud1").setOrigin(0, 0).setScale(0.3);
   this.add.image(300, 50, "cloud1").setOrigin(0, 0).setScale(0.3);
 
-  this.floor =
-    // tileSprite para repetir
-    this.add
-      .tileSprite(0, config.height - 70, config.width, 32, "floorbricks")
-      .setOrigin(0, 0);
+  this.floor = this.physics.add.staticGroup();
+  this.floor
+    .create(0, config.height - 70, config.width, 32, "floorbricks")
+    .setOrigin(0.0);
+  this.floor
+    .create(1000, config.height - 70, config.width, 32, "floorbricks")
+    .setOrigin(0.0);
 
-  //this.mario1 = this.add.sprite(50, 200, "mario1").setOrigin(0, 0);
+  this.add
+    .tileSprite(0, config.height - 70, config.width, 32, "floorbricks")
+    .setOrigin(0, 0);
+
+  //this.mario1 = this.add.sprite(50, 200, "mario1").setOrigin(0, 0); esta liena era para que la imagen de mario se quedara en la pantalla, ya no es necesaria porque se agrego gravedad
 
   this.mario1 = this.physics.add.sprite(50, 210, "mario1").set.setOrigin(0, 1);
   //setGravityY(200);   // con la variable confi, ya cuenta con uuna gavedad por defaun, si en caso de que cada personaje quieras que tenga una gravedad diferente se usa esta lina set gravity
