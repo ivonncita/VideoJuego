@@ -56,6 +56,10 @@ function create() {
     frameRate: 12,
     repear: -1,
   });
+  this.anims.create({
+    key: "mario-idle",
+    frames: [{ key: "mario1", frame: 0 }],
+  });
 }
 
 // la funcion updat al momento de imprimirla en la cossola siempre se esta ejecuntado y contando de manera infinita, esto pasa en todos los videojuegos, ya que por detras siempre se tiene que estar actualizando ya que en los juegos siempre esta pasandop algo, como que se mueva el persona o que el fondo este pasando algo o el tiempo este
@@ -73,5 +77,7 @@ function update() {
   } else if (this.keys.right.isDown && this.mario1.x < config.width - 16) {
     this.mario1.x += velocidad;
     this.mario1.anims.play("mario-walk", true);
+  } else {
+    this.mario1.anims.play("mario-idle", true);
   }
 }
