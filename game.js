@@ -1,9 +1,7 @@
-// global Phaser, esto significa que ya tiene una variable que contiene animaciones, estilos, imagenes, musica etc
-
 // configuracion del juego . que tipo de soporte se necesita, donde se va a renderizar el juego
 const config = {
   type: Phaser.AUTO, // SE ARA EN AUTOMATICO
-  // tamaño
+
   width: 400,
   height: 300,
   backgroundColor: "#33b7d8",
@@ -29,8 +27,6 @@ new Phaser.Game(config);
 // funciones
 // se ejecutaran el este orden, primero 1 sola vez las primeras dos funciones y la ultima constatemente
 
-//load se encarga de preparr la imagen y lo siguien es con lo que le indica que vas a cargar
-//SPRITESSHEET A DIFERENCIA DE LA IMAGEN, INDICA QUE NO ES UNA IMAGEN COMPLETA, SI QUE SE TIENE QE SUBIR EL ARCHIVO Y DIVIDIRLO EN POCIONES MAS PEQUEÑAS
 // frameWhith sirve para decirle cuanto mida cada elemento de una imagen que contiene varios elementos, como la imagen tiene un pero de 108 y contiene 6 elementos, se se divide
 function preload() {
   this.load.image("cloud1", "assets/scenery/overworld/cloud1.png");
@@ -39,37 +35,37 @@ function preload() {
     frameWidth: 18,
     frameHeight: 16,
   });
-  // aqui esta creando una animacion, se almacenara las posiciones 0 a 3 segun la imagen de "sprintsheet"
+
   //this.anims sub sistema de phaser
 }
 
-// aqui estoy dando la indicacion de se muestre la nube con un tamaño asignado
-// con setOrigin estoy diciendole a la imagen que la esquina de la imagen se posicione en la coordenada 0,0
-// con setScale modifico el tamaño de la imagen
+//
+
 // 100 va para en medio , 50 baja
 //tileSpring  se usa para decir que va a repetirse como bucle la imagen
-// el se llama de la configuracion que ya agregamos
+
 function create() {
   this.add.image(100, 50, "cloud1").setOrigin(0, 0).setScale(0.3);
   this.add.image(300, 50, "cloud1").setOrigin(0, 0).setScale(0.3);
 
   this.floor = this.physics.add.staticGroup();
   this.floor
-    .create(0, config.height - 70, config.width, 32, "floorbricks")
-    .setOrigin(0.0);
-  this.floor
-    .create(1000, config.height - 70, config.width, 32, "floorbricks")
-    .setOrigin(0.0);
+    .create(0, config.height - 70, config.width, 16, "floorbricks")
+    .setOrigin(0.5);
 
+  this.floor
+    .create(1000, config.height - 70, config.width, 16, "floorbricks")
+    .setOrigin(0.5);
+
+  this.physics.add.collider(this.mario1, this.floor);
   this.add
     .tileSprite(0, config.height - 70, config.width, 32, "floorbricks")
     .setOrigin(0, 0);
-
   //this.mario1 = this.add.sprite(50, 200, "mario1").setOrigin(0, 0); esta liena era para que la imagen de mario se quedara en la pantalla, ya no es necesaria porque se agrego gravedad
 
   this.mario1 = this.physics.add.sprite(50, 210, "mario1").set.setOrigin(0, 1);
   //setGravityY(200);   // con la variable confi, ya cuenta con uuna gavedad por defaun, si en caso de que cada personaje quieras que tenga una gravedad diferente se usa esta lina set gravity
-  // entrada por teclado
+
   this.keys = this.input.keyboard.createCursorKeys();
 
   this.anims.create({
@@ -91,12 +87,9 @@ function create() {
   });
 }
 
-// la funcion updat al momento de imprimirla en la cossola siempre se esta ejecuntado y contando de manera infinita, esto pasa en todos los videojuegos, ya que por detras siempre se tiene que estar actualizando ya que en los juegos siempre esta pasandop algo, como que se mueva el persona o que el fondo este pasando algo o el tiempo este
-
 function update() {
   const velocidad = 1.5;
   // metodo
-  // esta linea basicamente significa si usuario esta presinando (isDown en programacion de videojugos) keys izquiero se movera dos "posiiones a la izquierda"
 
   if (this.keys.left.isDown && this.mario1.x > 0) {
     this.mario1.x -= velocidad;
