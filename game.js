@@ -51,8 +51,13 @@ function preload() {
 // el se llama de la configuracion que ya agregamos
 function create() {
   this.add.image(100, 50, "cloud1").setOrigin(0, 0).setScale(0.3);
+  this.add.image(300, 50, "cloud1").setOrigin(0, 0).setScale(0.3);
 
-  this.add.tileSprite(0, config.height - 70, config.width, 32, "floorbricks");
+  this.floor =
+    // tileSprite para repetir
+    this.add
+      .tileSprite(0, config.height - 70, config.width, 32, "floorbricks")
+      .setOrigin(0, 0);
 
   //this.mario1 = this.add.sprite(50, 200, "mario1").setOrigin(0, 0);
 
