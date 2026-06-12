@@ -60,6 +60,12 @@ function create() {
     key: "mario-idle",
     frames: [{ key: "mario1", frame: 0 }],
   });
+
+  // salto
+  this.anims.create({
+    key: "mario-jump",
+    frames: [{ key: "mario1", frame: 5 }],
+  });
 }
 
 // la funcion updat al momento de imprimirla en la cossola siempre se esta ejecuntado y contando de manera infinita, esto pasa en todos los videojuegos, ya que por detras siempre se tiene que estar actualizando ya que en los juegos siempre esta pasandop algo, como que se mueva el persona o que el fondo este pasando algo o el tiempo este
@@ -84,5 +90,11 @@ function update() {
     //basicamente se lee como si no se esta presionando ningun boton quedate en el frame de la key mario-idle
   } else {
     this.mario1.anims.play("mario-idle", true);
+  }
+  if (this.keys.up.isDown) {
+    // esta linea dice basicamente revisa si en la llave de entrada, es decir que se esta ingredando en el teclado es la flecha de arriba en y
+    //El eje $Y$ aumenta hacia ABAJO. Por lo tanto, si quieres que un personaje suba hacia el cielo, tienes que restarle píxeles a su posició
+    this.mario1.y -= 5;
+    this.mario1.anims.play("mario-jump", true);
   }
 }
