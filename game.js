@@ -37,6 +37,8 @@ function preload() {
     "assets/blocks/underground/misteryBlock.png",
     { frameWidth: 18, frameHeight: 18 },
   );
+
+  this.load.image("longTube", "assets/scenery/vertical-large-tube.png.png");
 }
 
 // 100 va para en medio , 50 baja
@@ -59,10 +61,18 @@ function create() {
   this.mistery.body.setImmovable(true);
 
   ///////////////////////////////////////////////////////
+  this.longTube = this.physics.add.image(300, 200, "longTube");
+
   this.mario1 = this.physics.add.sprite(50, 210, "mario1").setOrigin(0, 1);
   0;
+  this.longTube.body.setAllowGravity(false);
+  // esta linea  no permite que se mueva,  por lo que en teoria se omitiria si queremos que algo se sie afecte
+  this.longTube.body.setImmovable(true);
+
+  /////////////////////////////////////////////////////////////7
   this.physics.add.collider(this.mario1, this.floor);
   this.physics.add.collider(this.mario1, this.mistery);
+  this.physics.add.collider(this.mario1, this.longTube);
   //
 
   /////////////////////// ccc  ////////////////////jkkkk/////////////////////////nnnnn777
