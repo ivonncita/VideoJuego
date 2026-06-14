@@ -78,9 +78,8 @@ this.mario1.flipX = false; // Mira a la derecha
 function update() {
   const velocidadHorizontal = 160;
 
-  // 1. MOVIMIENTO HORIZONTAL (Izquierda / Derecha / Quieto)
   if (this.keys.left.isDown) {
-    // IMPORTANTE: El valor debe ser NEGATIVO para ir a la izquierda
+    // El valor debe ser NEGATIVO para ir a la izquierda
     this.mario1.setVelocityX(-velocidadHorizontal);
     this.mario1.anims.play("mario-walk", true);
     this.mario1.flipX = true;
@@ -93,20 +92,16 @@ function update() {
     // Si no presionas nada, se detiene en seco
     this.mario1.setVelocityX(0);
 
-    // Si está en el suelo y quieto, animación de esperar
     if (this.mario1.body.touching.down) {
       this.mario1.anims.play("mario-idle", true);
     }
   }
 
-  // 2. MECÁNICA DE SALTO (Descomentada y corregida)
   if (this.keys.up.isDown && this.mario1.body.touching.down) {
     this.mario1.setVelocityY(-270);
     this.mario1.anims.play("mario-jump", true);
   }
 
-  // 3. CONTROL DE ANIMACIÓN EN EL AIRE
-  // Si no está tocando el suelo, forzamos la animación de salto (así no camina en el aire)
   if (!this.mario1.body.touching.down) {
     this.mario1.anims.play("mario-jump", true);
   }
