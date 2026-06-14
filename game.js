@@ -33,21 +33,25 @@ function preload() {
   });
 }
 
-// 100 va para en medio , 50 baja     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 100 va para en medio , 50 baja
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function create() {
   this.add.image(100, 50, "cloud1").setOrigin(0, 0).setScale(0.3);
   this.add.image(300, 50, "cloud1").setOrigin(0, 0).setScale(0.3);
-  this.add
-    .tileSprite(0, config.height - 70, config.width, 32, "floorbricks")
-    .setOrigin(0, 0);
+
   this.keys = this.input.keyboard.createCursorKeys();
   this.floor = this.physics.add.staticGroup();
-  this.floor.create(0, config.height - 70, "floorbricks").setOrigin(0.0);
+  let sueloFisico = this.add
+    .tileSprite(0, config.height - 70, config.width, 32, "floorbricks")
+    .setOrigin(0, 0);
+
+  this.floor.add(sueloFisico);
   this.mario1 = this.physics.add.sprite(50, 210, "mario1").setOrigin(0, 1);
+
   this.physics.add.collider(this.mario1, this.floor);
   //
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////777
+  /////////////////////// ccc  ////////////////////jkkkk/////////////////////////nnnnn777
 
   this.anims.create({
     key: "mario-walk",
@@ -69,26 +73,41 @@ function create() {
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////7
 
+this.mario1.flipX = false; // Mira a la derecha
+
 function update() {
-  const velocidad = 1;
-  // metodo
+  const velocidadHorizontal = 160;
 
-  if (this.keys.left.isDown && this.mario1.x > 0) {
-    this.mario1.x -= velocidad;
+  // 1. MOVIMIENTO HORIZONTAL (Izquierda / Derecha / Quieto)
+  if (this.keys.left.isDown) {
+    // IMPORTANTE: El valor debe ser NEGATIVO para ir a la izquierda
+    this.mario1.setVelocityX(-velocidadHorizontal);
     this.mario1.anims.play("mario-walk", true);
-    // gira a la izquierda
     this.mario1.flipX = true;
-  } else if (this.keys.right.isDown && this.mario1.x < config.width - 16) {
-    this.mario1.setVelocityX(100);
+  } else if (this.keys.right.isDown) {
+    // Valor POSITIVO para ir a la derecha
+    this.mario1.setVelocityX(velocidadHorizontal);
     this.mario1.anims.play("mario-walk", true);
-
     this.mario1.flipX = false;
   } else {
-    this.mario1.anims.play("mario-idle", true);
+    // Si no presionas nada, se detiene en seco
+    this.mario1.setVelocityX(0);
+
+    // Si está en el suelo y quieto, animación de esperar
+    if (this.mario1.body.touching.down) {
+      this.mario1.anims.play("mario-idle", true);
+    }
   }
 
+  // 2. MECÁNICA DE SALTO (Descomentada y corregida)
   if (this.keys.up.isDown && this.mario1.body.touching.down) {
-    this.mario1.setVelocityY(-250);
+    this.mario1.setVelocityY(-270);
+    this.mario1.anims.play("mario-jump", true);
+  }
+
+  // 3. CONTROL DE ANIMACIÓN EN EL AIRE
+  // Si no está tocando el suelo, forzamos la animación de salto (así no camina en el aire)
+  if (!this.mario1.body.touching.down) {
     this.mario1.anims.play("mario-jump", true);
   }
 }
