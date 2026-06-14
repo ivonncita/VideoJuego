@@ -39,6 +39,10 @@ function preload() {
   );
 
   this.load.image("longTube", "assets/scenery/vertical-large-tube.png.png");
+  this.load.spritesheet("koopa", "assets/entities/koopa.png", {
+    frameWidth: 18,
+    frameHeight: 25,
+  });
 }
 
 // 100 va para en medio , 50 baja
@@ -63,6 +67,10 @@ function create() {
   ///////////////////////////////////////////////////////
   this.longTube = this.physics.add.image(300, 200, "longTube");
 
+  this.koopa = this.physics.add.sprite(150, 220, "koopa");
+  this.koopa.body.setAllowGravity(false);
+  this.koopa.body.setImmovable(true);
+
   this.mario1 = this.physics.add.sprite(50, 210, "mario1").setOrigin(0, 1);
   0;
   this.longTube.body.setAllowGravity(false);
@@ -73,7 +81,8 @@ function create() {
   this.physics.add.collider(this.mario1, this.floor);
   this.physics.add.collider(this.mario1, this.mistery);
   this.physics.add.collider(this.mario1, this.longTube);
-  //
+  this.physics.add.collider(this.mario1, this.koopa);
+  this.physics.add.collider(this.floor, this.koopa);
 
   /////////////////////// ccc  ////////////////////jkkkk/////////////////////////nnnnn777
 
