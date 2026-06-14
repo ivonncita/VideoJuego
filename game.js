@@ -31,6 +31,12 @@ function preload() {
     frameWidth: 18,
     frameHeight: 16,
   });
+
+  this.load.spritesheet(
+    "mistery",
+    "assets/blocks/underground/misteryBlock.png",
+    { frameWidth: 18, frameHeight: 18 },
+  );
 }
 
 // 100 va para en medio , 50 baja
@@ -40,15 +46,23 @@ function create() {
   this.add.image(300, 50, "cloud1").setOrigin(0, 0).setScale(0.3);
 
   this.keys = this.input.keyboard.createCursorKeys();
+
+  //////////////////////////////////suelo/////////////////////////////////////////
   this.floor = this.physics.add.staticGroup();
   let sueloFisico = this.add
     .tileSprite(0, config.height - 70, config.width, 32, "floorbricks")
     .setOrigin(0, 0);
+  this.floor.add(sueloFisico); // no mover, suelo vs fisica
+  ///////////////////////////////////////////////////////////////7
+  this.mistery = this.physics.add.sprite(200, 120, "mistery");
+  this.mistery.body.setAllowGravity(false);
+  this.mistery.body.setImmovable(true);
 
-  this.floor.add(sueloFisico);
+  ///////////////////////////////////////////////////////
   this.mario1 = this.physics.add.sprite(50, 210, "mario1").setOrigin(0, 1);
-
+  0;
   this.physics.add.collider(this.mario1, this.floor);
+  this.physics.add.collider(this.mario1, this.mistery);
   //
 
   /////////////////////// ccc  ////////////////////jkkkk/////////////////////////nnnnn777
