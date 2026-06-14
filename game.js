@@ -93,6 +93,15 @@ function create() {
     frameRate: 12,
     repeat: -1,
   });
+
+  // this.anims.create({
+  // "koopa-walk",
+
+  //frames: this.anims.generateFrameNumbers("koopa", { start: 1, end: 2 }),
+  //frameRate: 12,
+  //repeat: -1,
+  // });
+
   this.anims.create({
     key: "mario-idle",
     frames: [{ key: "mario1", frame: 0 }],
@@ -110,6 +119,10 @@ this.mario1.flipX = false; // Mira a la derecha
 
 function update() {
   const velocidadHorizontal = 160;
+
+  //this.koopa.setVelocityX(-velocidadHorizontal);
+  //this.koopa.anims.play("koopa-walk", true);
+  //this.koppa.flipX = true;
 
   if (this.keys.left.isDown) {
     // El valor debe ser NEGATIVO para ir a la izquierda
