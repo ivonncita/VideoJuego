@@ -56,10 +56,12 @@ function create() {
   //////////////////////////////////suelo/////////////////////////////////////////
   this.floor = this.physics.add.staticGroup();
   let sueloFisico = this.add
-    .tileSprite(0, config.height - 70, config.width, 32, "floorbricks")
+    .tileSprite(0, config.height - 70, 2000, 32, "floorbricks")
     .setOrigin(0, 0);
-  this.floor.add(sueloFisico); // no mover, suelo vs fisica
+  this.floor.add(sueloFisico); // no mover, suelo vs fisicsueloFisico.body.updateFromGameObject(); a
+  sueloFisico.body.updateFromGameObject();
   ///////////////////////////////////////////////////////////////7
+  this.physics.world.setBounds(0, 0, 2000, 300);
   this.mistery = this.physics.add.sprite(200, 120, "mistery");
   this.mistery.body.setAllowGravity(false);
   this.mistery.body.setImmovable(true);
@@ -71,8 +73,13 @@ function create() {
   this.koopa.body.setAllowGravity(false);
   this.koopa.body.setImmovable(true);
 
-  this.mario1 = this.physics.add.sprite(50, 210, "mario1").setOrigin(0, 1);
-  0;
+  this.mario1 = this.physics.add
+    .sprite(50, 210, "mario1")
+    .setOrigin(0, 1)
+    .setCollideWorldBounds(true);
+  this.cameras.main.setBounds(0, 0, 2000, 300);
+
+  this.cameras.main.startFollow(this.mario1, true, 0.1, 0.1);
   this.longTube.body.setAllowGravity(false);
   // esta linea  no permite que se mueva,  por lo que en teoria se omitiria si queremos que algo se sie afecte
   this.longTube.body.setImmovable(true);
@@ -112,6 +119,7 @@ function create() {
     key: "mario-jump",
     frames: [{ key: "mario1", frame: 5 }],
   });
+  this.cameras.main.scrollX = 100;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////7
 
@@ -144,11 +152,18 @@ function update() {
   }
 
   if (this.keys.up.isDown && this.mario1.body.touching.down) {
-    this.mario1.setVelocityY(-270);
+    // que tan dificil es para mario saltar
+    this.mario1.setVelocityY(-200);
     this.mario1.anims.play("mario-jump", true);
   }
 
   if (!this.mario1.body.touching.down) {
     this.mario1.anims.play("mario-jump", true);
+  }
+  if (this.mario1) {
+    // Restamos 150 para que Mario quede centrado en tu pantalla de 400 píxeles
+    let targetX = this.mario1.x - 150;
+
+    this.cameras.main.scrollX = Phaser.Math.Clamp(targetX, 0, 1600);
   }
 }
