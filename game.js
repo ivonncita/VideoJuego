@@ -43,6 +43,7 @@ function preload() {
     frameWidth: 18,
     frameHeight: 25,
   });
+  this.load.audio("music", "assets/sound/music/overworld/theme.mp3");
 }
 
 // 100 va para en medio , 50 baja
@@ -113,6 +114,15 @@ function create() {
     key: "mario-idle",
     frames: [{ key: "mario1", frame: 0 }],
   });
+  // muerte
+
+  //game.this.create{(
+  //key : "mario-dead",
+  //frames: [{key: "mario1", frame: 5}]
+
+  //)}
+
+  this.sound.play("music", { loop: true });
 
   // salto
   this.anims.create({
